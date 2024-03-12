@@ -26,7 +26,7 @@ export class AuthController {
 
      @Post('refresh-token')
      refeshtoken(@Body() {refresh_token}):void{
-          console.log("refreshtoken");
+          console.log("refreshtoken")
           this.authservice.refreshtoken(refresh_token);
      }
 }

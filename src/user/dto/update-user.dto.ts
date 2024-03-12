@@ -1,4 +1,4 @@
-export class RegisterUserDto {
+export class UpdateUserDto {
 
      first_name: string;
 
@@ -10,11 +10,5 @@ export class RegisterUserDto {
 
      address: string;
 
-     email: string;
-
-     password: string; 
-
      status: number;
-
-     roles: string;
 }
