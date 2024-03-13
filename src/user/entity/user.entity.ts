@@ -1,10 +1,16 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    BeforeInsert,
+    Column,
+    Entity,
+    OneToMany,
+} from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { Roles } from '../../common/enums/roles.enum';
+import { BaseEntity } from '../../common/entity/base.entity';
+import { PostEntity } from '../../post/entity/post.entity';
 
 @Entity({ name: 'user' })
-export class UserEntity {
-     @PrimaryGeneratedColumn('uuid')
-     id: string
-
+export class UserEntity extends BaseEntity {
     @Column()
     first_name: string;
 
@@ -26,21 +32,26 @@ export class UserEntity {
     @Column()
     password: string;
 
-    @Column()
+    @Column({ nullable: true, default: null })
     refresh_token: string;
 
-    @Column({default: 1})
-    status:number;
+    @Column({ nullable: true, default: null })
+    avatar: string;
 
-    @CreateDateColumn()
-    create_at: Date;
-
-    @CreateDateColumn()
-    update_at: Date;
+    @Column({ default: 1 })
+    status: number;
 
     @Column({
         type: 'enum',
-        enum: ['ADMIN', 'STAFF', 'CUSTOMER'],
+        enum: Roles,
     })
     roles: string;
+
+    @BeforeInsert()
+    async hashPassword() {
+        this.password = await bcrypt.hash(this.password.toString(), 10);
+    }
+
+    @OneToMany(() => PostEntity, (post) => post.user)
+    posts: PostEntity[];
 }
