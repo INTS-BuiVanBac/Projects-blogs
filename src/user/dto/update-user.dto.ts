@@ -1,14 +1,13 @@
 export class UpdateUserDto {
+    first_name: string;
 
-     first_name: string;
+    last_name: string;
 
-     last_name: string;
+    full_name: string;
 
-     full_name: string;
+    age: number;
 
-     age: number;
+    address: string;
 
-     address: string;
-
-     status: number;
+    status: number;
 }

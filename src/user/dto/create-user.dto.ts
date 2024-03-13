@@ -1,20 +1,19 @@
 export class createUserDto {
+    first_name: string;
 
-     first_name: string;
+    last_name: string;
 
-     last_name: string;
+    full_name: string;
 
-     full_name: string;
+    age: number;
 
-     age: number;
+    address: string;
 
-     address: string;
+    email: string;
 
-     email: string;
+    password: string;
 
-     password: string; 
+    status: number;
 
-     status: number;
-
-     roles: string;
+    roles: string;
 }
