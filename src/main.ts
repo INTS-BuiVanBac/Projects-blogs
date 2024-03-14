@@ -6,6 +6,7 @@ async function bootstrap() {
     const app = await NestFactory.create<NestApplication>(AppModule, {
         logger: ['debug', 'error', 'fatal', 'verbose', 'warn'],
     });
+    
     const config = new DocumentBuilder()
         .setTitle('Blog API')
         .setDescription('List API for simple Blog')
