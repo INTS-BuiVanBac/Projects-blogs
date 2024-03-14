@@ -16,6 +16,9 @@ import { configs } from './configs/app.config';
 import { PostModule } from './post/post.module';
 import { PostController } from './post/post.controller';
 import { PostService } from './post/post.service';
+import { PostEntity } from './post/entity/post.entity';
+import { UserEntity } from './user/entity/user.entity';
+import { CategoryModule } from './category/category.module';
 
 @Module({
     imports: [
@@ -33,10 +36,9 @@ import { PostService } from './post/post.service';
         }),
         UserModule,
         AuthModule,
-        PostModule
+        PostModule,
+        CategoryModule
     ],
-    controllers: [UserController, AuthController,  PostController],
-    providers: [PostService],
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
