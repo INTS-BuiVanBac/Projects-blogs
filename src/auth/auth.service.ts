@@ -80,7 +80,7 @@ export class AuthService {
                 refreshtoken: refresh_token,
             };
         } catch (error) {
-            // Xử lý lỗi nếu xác thực thất bại và ném ra một HttpException
+           
             //  throw new HttpException('Refresh token is not valid',HttpStatus.BAD_REQUEST);
         }
     }
