@@ -14,6 +14,8 @@ import { AuthController } from './auth/auth.controller';
 import { CheckTokenReq } from './auth/middleware/check.token.req';
 import { configs } from './configs/app.config';
 import { PostModule } from './post/post.module';
+import { PostController } from './post/post.controller';
+import { PostService } from './post/post.service';
 
 @Module({
     imports: [
@@ -33,8 +35,8 @@ import { PostModule } from './post/post.module';
         AuthModule,
         PostModule
     ],
-    controllers: [UserController, AuthController],
-    providers: [],
+    controllers: [UserController, AuthController,  PostController],
+    providers: [PostService],
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
@@ -43,7 +45,8 @@ export class AppModule implements NestModule {
             .exclude(
                 { path: '/auth/login', method: RequestMethod.POST },
                 { path: '/user', method: RequestMethod.POST },
+                { path: '/auth/register', method: RequestMethod.POST },
             )
-            .forRoutes('*');
+            .forRoutes('*')
     }
 }
