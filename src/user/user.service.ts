@@ -4,15 +4,13 @@ import {
     DeleteResult,
     Like,
     Repository,
-    ReturnDocument,
     UpdateResult,
 } from 'typeorm';
 import { UserEntity } from './entity/user.entity';
 import { createUserDto } from './dto/create-user.dto';
-import * as bcrypt from 'bcrypt';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { FilterUserDto } from './dto/filter-user.dto';
-import { link } from 'fs';
+
 
 interface UserResponse {
     data: UserEntity[];
@@ -68,7 +66,6 @@ export class UserService {
     }
 
     async create(dto: createUserDto): Promise<UserEntity> {
-        //     const hashPassword = await bcrypt.hash(createUserdto.password, 10);
         const User = new UserEntity();
         Object.assign(User, dto);
         return await this.userReponsitory.save(User);
