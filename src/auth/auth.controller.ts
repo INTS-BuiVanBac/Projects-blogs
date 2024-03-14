@@ -18,6 +18,8 @@ export class AuthController {
     register(@Body() registerUserdto: RegisterUserDto): void {
         this.authservice.register(registerUserdto);
     }
+
+    
     @Post('login')
     @ApiResponse({ status: 201, description: 'Login successfully!' })
     @ApiResponse({ status: 401, description: 'Login Fail!' })
@@ -25,6 +27,7 @@ export class AuthController {
     login(@Body() loginUserDto: LoginUserDto): Promise<any> {
         return this.authservice.login(loginUserDto);
     }
+
 
     @Post('refresh-token')
     refeshtoken(@Body() { refresh_token }): void {
