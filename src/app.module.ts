@@ -35,8 +35,7 @@ import { PostService } from './post/post.service';
         AuthModule,
         PostModule
     ],
-    controllers: [UserController, AuthController,  PostController],
-    providers: [PostService],
+    
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
@@ -44,6 +43,7 @@ export class AppModule implements NestModule {
             .apply(CheckTokenReq)
             .exclude(
                 { path: '/auth/login', method: RequestMethod.POST },
+                { path: '/auth/refresh-token', method: RequestMethod.POST },
                 { path: '/user', method: RequestMethod.POST },
                 { path: '/auth/register', method: RequestMethod.POST },
             )

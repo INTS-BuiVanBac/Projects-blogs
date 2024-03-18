@@ -8,17 +8,9 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { configs } from '../configs/app.config';
+import { Result } from '../shared/result';
 
-interface TokenPayload {
-    id: string;
-    email: string;
-    refreshtoken: string;
-}
 
-interface AuthenticatedUser {
-    access_token: string;
-    refresh_token: string;
-}
 
 @Injectable()
 export class AuthService {
@@ -32,12 +24,11 @@ export class AuthService {
         const hashpassword = await this.hashpassword(registerUserdto.password);
         return await this.userRespository.save({
             ...registerUserdto,
-            refresh_token: 'str',
             password: hashpassword,
         });
     }
 
-    async login(loginuserDto: LoginUserDto): Promise<AuthenticatedUser> {
+    async login(loginuserDto: LoginUserDto): Promise<Result> {
         const user = await this.userRespository.findOne({
             where: { email: loginuserDto.email },
         });
@@ -62,7 +53,7 @@ export class AuthService {
         return this.generateToken(payload);
     }
 
-    async refreshtoken(refresh_token: string): Promise<TokenPayload> {
+    async refreshtoken(refresh_token: string): Promise<Result> {
         try {
             // Sử dụng phương thức verifyAsync từ jwtService để xác thực refreshToken
             const verify = await this.jwtservice.verifyAsync(refresh_token, {
@@ -74,14 +65,16 @@ export class AuthService {
                     HttpStatus.UNAUTHORIZED,
                 );
             }
-            return {
-                id: verify.id,
-                email: verify.email,
-                refreshtoken: refresh_token,
-            };
+            console.log(verify);
+            const checkExitsToken = await this.userRespository.findOneBy({email: verify.email, refresh_token});
+            if(checkExitsToken){
+                return this.generateToken({id:verify.id, email: verify.email});
+            }else{
+                throw new HttpException('Refresh token is not valid',HttpStatus.BAD_REQUEST);
+            }
         } catch (error) {
-            // Xử lý lỗi nếu xác thực thất bại và ném ra một HttpException
-            //  throw new HttpException('Refresh token is not valid',HttpStatus.BAD_REQUEST);
+            throw error;
+            
         }
     }
 

@@ -22,12 +22,10 @@ export class CheckTokenReq implements NestMiddleware {
         if (!token) {
             throw new UnauthorizedException();
         }
-
         try {
             const payload = this.jwtService.verify(token, {
                 publicKey: configs.key.public_key,
             });
-
             req['user_data'] = payload;
         } catch {
             throw new HttpException(
@@ -38,7 +36,6 @@ export class CheckTokenReq implements NestMiddleware {
                 419,
             );
         }
-
         return next();
     }
 }

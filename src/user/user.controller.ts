@@ -21,7 +21,7 @@ import { query } from 'express';
 import { FilterUserDto } from './dto/filter-user.dto';
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { storageConfig } from '../helpers/config';
+import { storageConfig } from '../configs/helpers/config';
 import { extname } from 'path';
 interface UserResponse {
     data: UserEntity[];

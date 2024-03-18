@@ -18,7 +18,7 @@ import {
 } from '@nestjs/common';
 import { createPostDto } from './dto/create-post.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { storageConfig } from '../helpers/config';
+import { storageConfig } from '../configs/helpers/config';
 import { extname } from 'path';
 import { PostService } from './post.service';
 import { PostEntity } from './entity/post.entity';
